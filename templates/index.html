@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PandesalExpress - Fresh Bread Delivery</title>
+  <!-- Explicit Flask Static Route for CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='design.css') }}" />
+</head>
+<body>
+
+  <!-- SIGN-IN SCREEN -->
+  <div id="auth-screen" class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <span class="auth-logo">🥖</span>
+        <h2>PandesalExpress</h2>
+        <p>Sign in to order fresh morning bread from nearby vendors</p>
+      </div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-name">Full Name</label>
+          <input type="text" id="login-name" placeholder="e.g. Juan dela Cruz" required value="Juan dela Cruz" />
+        </div>
+        <div class="form-group">
+          <label for="login-email">Email or Mobile Number</label>
+          <input type="text" id="login-email" placeholder="e.g. juan@gmail.com" required value="juan@gmail.com" />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" required value="password123" />
+        </div>
+        <button type="submit" class="auth-btn">Sign In to Continue</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APPLICATION (Hidden by default) -->
+  <div id="app-screen" style="display: none;">
+    <header class="navbar">
+      <div class="logo-container">
+        <span class="logo-icon">🥖</span>
+        <h1>PandesalExpress</h1>
+      </div>
+      <div class="user-location">
+        📍 Delivery Area: <strong>Marikina City</strong>
+      </div>
+      <div class="nav-actions">
+        <span id="user-greeting" class="user-greeting">Welcome!</span>
+        <button class="cart-btn" onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
+        <button class="logs-btn" onclick="toggleLogsModal()">📋 Customer Order Log</button>
+        <button class="logout-btn" onclick="handleLogout()">Sign Out</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h2>Fresh Morning Bread, Delivered to Your Doorstep</h2>
+      <p>Select the nearest vendor to view their daily baked items and place your pre-order.</p>
+    </section>
+
+    <main class="container">
+      <section class="vendors-section">
+        <h3>Select Nearest Vendor</h3>
+        <div id="vendor-list" class="vendor-grid"></div>
+      </section>
+
+      <section class="products-section">
+        <div class="menu-header">
+          <h3 id="current-vendor-title">Select a vendor to view products</h3>
+          <span id="current-vendor-distance" class="distance-badge"></span>
+        </div>
+        <div id="product-list" class="product-grid"></div>
+      </section>
+    </main>
+
+    <!-- CART MODAL -->
+    <div id="cart-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Your Order Summary</h2>
+          <span class="close-btn" onclick="toggleCart()">&times;</span>
+        </div>
+        <div id="cart-items" class="cart-items-list"></div>
+        <div class="cart-footer">
+          <div class="total-row"><span>Subtotal:</span><span id="cart-subtotal">₱0.00</span></div>
+          <div class="total-row"><span>Delivery Fee:</span><span id="cart-delivery-fee">₱0.00</span></div>
+          <div class="total-row grand-total"><span>Total:</span><span id="cart-total">₱0.00</span></div>
+          <form id="checkout-form">
+            <input type="text" id="cust-name" placeholder="Full Name" required />
+            <input type="text" id="cust-address" placeholder="Complete Delivery Address" required />
+            <input type="time" id="cust-time" required />
+            <button type="submit" class="checkout-btn">Confirm Pre-Order</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTOMER ORDER LOG MODAL -->
+    <div id="logs-modal" class="modal">
+      <div class="modal-content log-modal-content">
+        <div class="modal-header">
+          <h2>📋 Recent Customer Orders Log</h2>
+          <span class="close-btn" onclick="toggleLogsModal()">&times;</span>
+        </div>
+        <div class="table-wrapper">
+          <table class="log-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Address</th>
+                <th>Vendor</th>
+                <th>Items Ordered</th>
+                <th>Total</th>
+                <th>Delivery Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="logs-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONFIRMATION MODAL -->
+    <div id="confirm-modal" class="modal">
+      <div class="modal-content confirm-box">
+        <span class="success-icon">✅</span>
+        <h2>Order Placed Successfully!</h2>
+        <p id="confirmation-details"></p>
+        <button class="checkout-btn" onclick="closeConfirmation()">Back to Home</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Explicit Flask Static Route for JavaScript -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
